@@ -29,16 +29,18 @@ class Dog
       VALUES (?, ?)
     SQL
 
-    DB[:conn].execute(sql, self.name, self.breed)
-    @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
+    if self.id
+      self.update
+    else
+      DB[:conn].execute(sql, self.name, self.breed)
+      @id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
+    end
     self
   end
 
   def self.create(hash)
     doggy = Dog.new(hash)
     doggy.save
-    doggy.id = DB[:conn].execute("SELECT last_insert_rowid() FROM dogs")[0][0]
-    doggy
   end
 
   def self.find_by_id(id_num)
