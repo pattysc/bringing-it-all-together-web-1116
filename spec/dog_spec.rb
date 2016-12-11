@@ -86,7 +86,6 @@ describe "Dog" do
       dog = Dog.create(name: "Kevin", breed: "shepard")
 
       dog_from_db = Dog.find_by_id(1)
-
       expect(dog_from_db.id).to eq(1)
     end
   end
